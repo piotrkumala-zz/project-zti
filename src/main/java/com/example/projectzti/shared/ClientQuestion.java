@@ -12,7 +12,7 @@ public class ClientQuestion {
     private String rightText;
     private String leftText;
 
-    public ClientQuestion(UUID creationId, String text, UUID questionRight, UUID questionLeft, String rightText, String leftText){
+    public ClientQuestion(UUID creationId, String text, UUID questionRight, UUID questionLeft, String rightText, String leftText) {
         this.id = creationId;
         this.text = text;
         this.right = questionRight;
@@ -20,12 +20,13 @@ public class ClientQuestion {
         this.rightText = rightText;
         this.leftText = leftText;
     }
-    public ClientQuestion(Question question)
-    {
+
+    public ClientQuestion(Question question) {
         this(question.getId(), question.getQuestionText(), question.getExternalRight(), question.getExternalLeft(), question.getLeftText(), question.getRightText());
     }
 
-    public ClientQuestion() {}
+    public ClientQuestion() {
+    }
 
     public String getText() {
         return text;

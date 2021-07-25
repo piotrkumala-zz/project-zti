@@ -1,6 +1,5 @@
 package com.example.projectzti.shared;
 
-import com.example.projectzti.database.models.Question;
 import com.example.projectzti.database.models.Survey;
 
 import java.util.Set;
@@ -17,5 +16,7 @@ public class ClientSurvey {
         this.title = survey.getTitle();
         this.description = survey.getDescription();
     }
-    public ClientSurvey() {}
+
+    public ClientSurvey() {
+    }
 }

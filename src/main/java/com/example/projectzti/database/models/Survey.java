@@ -10,13 +10,13 @@ import java.util.stream.Collectors;
 
 @Entity
 public class Survey extends Metadata {
+    @Id
+    @GeneratedValue
+    private final UUID id = UUID.randomUUID();
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Question> question;
     @OneToMany(mappedBy = "survey", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Set<Answer> answers;
-    @Id
-    @GeneratedValue
-    private UUID id = UUID.randomUUID();
     @Lob
     private String description;
     private String title;

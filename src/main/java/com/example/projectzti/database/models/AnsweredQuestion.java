@@ -7,16 +7,16 @@ import java.util.UUID;
 public class AnsweredQuestion extends Metadata {
     @Id
     @GeneratedValue
-    private UUID id = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
 
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="answer_id", nullable=false)
+    @JoinColumn(name = "answer_id", nullable = false)
     private Answer answer;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="question_id", nullable=false)
+    @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 
-    private UUID answerId;
+    private UUID answeredId;
 }

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class Question extends Metadata{
+public class Question extends Metadata {
 
 
     @Id
