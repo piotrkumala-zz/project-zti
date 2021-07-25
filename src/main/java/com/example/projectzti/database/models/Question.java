@@ -6,44 +6,42 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-public class Question {
+public class Question extends Metadata{
 
 
     @Id
     @GeneratedValue
-    private Long id;
-
-    private UUID externalId;
+    private UUID id = UUID.randomUUID();
     private String questionText;
     private UUID externalRight;
     private UUID externalLeft;
+    private String leftText;
+    private String rightText;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name="survey_id", nullable=false)
+    @JoinColumn(name = "survey_id", nullable = false)
     private Survey survey;
 
     public Question() {
 
     }
 
-    public Question(UUID externalId, String questionText, UUID externalRight, UUID externalLeft, Survey survey){
-        this.externalId = externalId;
+    public Question(UUID id, String questionText, UUID externalRight, UUID externalLeft, String leftText, String rightText, Survey survey) {
+        this.id = id;
         this.questionText = questionText;
         this.externalRight = externalRight;
         this.externalLeft = externalLeft;
+        this.leftText = leftText;
+        this.rightText = rightText;
         this.survey = survey;
     }
 
     public Question(ClientQuestion clientQuestion, Survey survey) {
-        this(clientQuestion.getId(), clientQuestion.getText(), clientQuestion.getRight(), clientQuestion.getLeft(), survey);
+        this(clientQuestion.getId(), clientQuestion.getText(), clientQuestion.getRight(), clientQuestion.getLeft(), clientQuestion.getLeftText(), clientQuestion.getRightText(), survey);
     }
 
     public String getQuestionText() {
         return questionText;
-    }
-
-    public UUID getExternalId() {
-        return externalId;
     }
 
     public UUID getExternalRight() {
@@ -52,5 +50,17 @@ public class Question {
 
     public UUID getExternalLeft() {
         return externalLeft;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public String getRightText() {
+        return rightText;
+    }
+
+    public String getLeftText() {
+        return leftText;
     }
 }

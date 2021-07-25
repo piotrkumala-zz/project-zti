@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
@@ -26,9 +27,14 @@ public class SurveyService {
         return StreamSupport.stream(this.repository.findAll().spliterator(), false);
     }
 
-    public void insertSurvey(ClientSurvey survey)
+    public UUID insertSurvey(ClientSurvey survey)
     {
         var entityToSave = new Survey(survey);
         var entity = this.repository.save(entityToSave);
+        return entity.getId();
+    }
+
+    public Survey getSurvey(UUID id) {
+        return this.repository.findById(id).orElse(null);
     }
 }

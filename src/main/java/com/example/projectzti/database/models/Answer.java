@@ -4,14 +4,13 @@ package com.example.projectzti.database.models;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
-public class Answer {
+public class Answer extends Metadata{
     @Id
     @GeneratedValue
-    private Long id;
-
-    private Date answerDate;
+    private UUID id = UUID.randomUUID();
 
     @ManyToOne(optional = false)
     @JoinColumn(name="survey_id", nullable=false)
@@ -22,9 +21,8 @@ public class Answer {
 
     public Answer() {}
 
-    public Answer(Date answerDate, Survey survey, Set<AnsweredQuestion> answeredQuestions)
+    public Answer(Survey survey, Set<AnsweredQuestion> answeredQuestions)
     {
-        this.answerDate = answerDate;
         this.survey = survey;
         this.answeredQuestions = answeredQuestions;
     }
