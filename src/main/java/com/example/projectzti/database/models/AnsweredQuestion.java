@@ -1,5 +1,6 @@
 package com.example.projectzti.database.models;
 
+import com.example.projectzti.shared.AnsweredDirection;
 import com.example.projectzti.shared.ClientAnsweredQuestion;
 
 import javax.persistence.*;
@@ -17,14 +18,14 @@ public class AnsweredQuestion extends Metadata {
     private Answer answer;
 
     private UUID questionId;
-    private UUID answeredId;
+    private AnsweredDirection answeredDirection;
 
     public AnsweredQuestion() {
     }
 
     public AnsweredQuestion(ClientAnsweredQuestion question, Answer answer, Survey survey) {
-        this.answeredId = question.getAnsweredId();
         this.questionId = question.getQuestionId();
+        this.answeredDirection = question.getAnsweredDirection();
         this.answer = answer;
     }
 
@@ -32,7 +33,8 @@ public class AnsweredQuestion extends Metadata {
         return questionId;
     }
 
-    public UUID getAnsweredId() {
-        return answeredId;
+
+    public AnsweredDirection getAnsweredDirection() {
+        return answeredDirection;
     }
 }

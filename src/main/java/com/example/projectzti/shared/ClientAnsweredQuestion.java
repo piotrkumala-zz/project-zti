@@ -7,11 +7,11 @@ import java.util.UUID;
 public class ClientAnsweredQuestion {
 
     private UUID questionId;
-    private UUID answeredId;
+    private AnsweredDirection answeredDirection;
 
-    public ClientAnsweredQuestion(UUID questionId, UUID answeredID) {
+    public ClientAnsweredQuestion(UUID questionId,  AnsweredDirection answeredDirection) {
         this.questionId = questionId;
-        this.answeredId = answeredID;
+        this.answeredDirection = answeredDirection;
     }
 
     public ClientAnsweredQuestion() {
@@ -19,15 +19,14 @@ public class ClientAnsweredQuestion {
 
 
     public ClientAnsweredQuestion(AnsweredQuestion answeredQuestion) {
-        this(answeredQuestion.getQuestionId(), answeredQuestion.getAnsweredId());
+        this(answeredQuestion.getQuestionId(), answeredQuestion.getAnsweredDirection());
     }
 
     public UUID getQuestionId() {
         return questionId;
     }
 
-    public UUID getAnsweredId() {
-        return answeredId;
+    public AnsweredDirection getAnsweredDirection() {
+        return answeredDirection;
     }
-
 }
