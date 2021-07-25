@@ -1,9 +1,12 @@
 package com.example.projectzti.database.models;
 
 
+import com.example.projectzti.shared.ClientAnswer;
+
 import javax.persistence.*;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Entity
 public class Answer extends Metadata {
@@ -19,8 +22,12 @@ public class Answer extends Metadata {
     public Answer() {
     }
 
-    public Answer(Survey survey, Set<AnsweredQuestion> answeredQuestions) {
+    public Answer(Survey survey, ClientAnswer answer) {
         this.survey = survey;
-        this.answeredQuestions = answeredQuestions;
+        this.answeredQuestions = answer.getAnsweredQuestions().stream().map(x -> new AnsweredQuestion(x, this, survey)).collect(Collectors.toSet());
+    }
+
+    public UUID getSurveyId() {
+        return survey.getId();
     }
 }

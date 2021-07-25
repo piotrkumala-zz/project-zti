@@ -27,7 +27,7 @@ public class SurveyController {
     }
 
     @PostMapping(value = "api/survey")
-    public UUID saveSurvey(@RequestBody @Validated ClientSurvey survey) {
-        return this.surveyService.insertSurvey(survey);
+    public ClientSurvey saveSurvey(@RequestBody @Validated ClientSurvey survey) {
+        return new ClientSurvey(this.surveyService.insertSurvey(survey));
     }
 }

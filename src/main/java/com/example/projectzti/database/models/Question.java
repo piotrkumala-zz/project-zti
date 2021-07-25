@@ -2,7 +2,10 @@ package com.example.projectzti.database.models;
 
 import com.example.projectzti.shared.ClientQuestion;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.util.UUID;
 
 @Entity
@@ -10,7 +13,6 @@ public class Question extends Metadata {
 
 
     @Id
-    @GeneratedValue
     private UUID id = UUID.randomUUID();
     private String questionText;
     private UUID externalRight;

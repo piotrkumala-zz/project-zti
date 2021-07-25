@@ -23,10 +23,9 @@ public class SurveyService {
         return StreamSupport.stream(this.repository.findAll().spliterator(), false);
     }
 
-    public UUID insertSurvey(ClientSurvey survey) {
+    public Survey insertSurvey(ClientSurvey survey) {
         var entityToSave = new Survey(survey);
-        var entity = this.repository.save(entityToSave);
-        return entity.getId();
+        return this.repository.save(entityToSave);
     }
 
     public Survey getSurvey(UUID id) {
