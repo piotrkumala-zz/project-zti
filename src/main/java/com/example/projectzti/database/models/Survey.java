@@ -20,11 +20,13 @@ public class Survey extends Metadata {
     @Lob
     private String description;
     private String title;
+    private UUID rootQuestion;
 
     public Survey(ClientSurvey survey) {
         this.question = survey.question.stream().map(x -> new Question(x, this)).collect(Collectors.toSet());
         this.title = survey.title;
         this.description = survey.description;
+        this.rootQuestion = survey.rootQuestion;
     }
 
     public Survey() {
@@ -36,6 +38,10 @@ public class Survey extends Metadata {
 
     public String getDescription() {
         return this.description;
+    }
+
+    public UUID getRootQuestion() {
+        return this.rootQuestion;
     }
 
     public UUID getId() {
