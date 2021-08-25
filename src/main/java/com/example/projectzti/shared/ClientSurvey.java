@@ -22,4 +22,10 @@ public class ClientSurvey {
 
     public ClientSurvey() {
     }
+
+    public ClientSurvey(CreateSurveyRequest request) {
+        this.title = request.title;
+        this.description = request.description;
+        // TODO convert basic questions to this monstrosity
+    }
 }

@@ -2,6 +2,7 @@ package com.example.projectzti.controllers;
 
 import com.example.projectzti.database.services.SurveyService;
 import com.example.projectzti.shared.ClientSurvey;
+import com.example.projectzti.shared.CreateSurveyRequest;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class SurveyController {
     }
 
     @PostMapping(value = "api/survey")
-    public ClientSurvey saveSurvey(@RequestBody @Validated ClientSurvey survey) {
-        return new ClientSurvey(this.surveyService.insertSurvey(survey));
+    public ClientSurvey saveSurvey(@RequestBody @Validated CreateSurveyRequest survey) {
+        return new ClientSurvey(this.surveyService.insertSurvey(new ClientSurvey(survey)));
     }
 }
