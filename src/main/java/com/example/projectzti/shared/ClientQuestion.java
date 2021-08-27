@@ -20,12 +20,16 @@ public class ClientQuestion {
         this.rightText = rightText;
         this.leftText = leftText;
     }
-
     public ClientQuestion(Question question) {
         this(question.getId(), question.getQuestionText(), question.getExternalRight(), question.getExternalLeft(), question.getLeftText(), question.getRightText());
     }
 
     public ClientQuestion() {
+    }
+
+    public ClientQuestion(CreateSurveyQuestion createSurveyQuestion) {
+        this.text = createSurveyQuestion.questionText;
+        this.id = UUID.randomUUID();
     }
 
     public String getText() {
@@ -50,5 +54,21 @@ public class ClientQuestion {
 
     public String getLeftText() {
         return leftText;
+    }
+
+    public void setRight(UUID id) {
+        this.right = id;
+    }
+
+    public void setRightText(String text){
+        this.rightText = text;
+    }
+
+    public void setLeft(UUID id) {
+        this.left = id;
+    }
+
+    public void setLeftText(String text){
+        this.leftText = text;
     }
 }
