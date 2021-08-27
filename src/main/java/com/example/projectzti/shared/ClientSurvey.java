@@ -2,7 +2,10 @@ package com.example.projectzti.shared;
 
 import com.example.projectzti.database.models.Survey;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ClientSurvey {
@@ -25,44 +28,51 @@ public class ClientSurvey {
     public ClientSurvey(CreateSurveyRequest request) {
         this.title = request.title;
         this.description = request.description;
-        Set<ClientQuestion> set = new HashSet<>();
-        for (CreateSurveyQuestion createSurveyQuestion : request.questions) {
-            ClientQuestion clientQuestion = new ClientQuestion(createSurveyQuestion);
-            set.addAll(getAllChildren(createSurveyQuestion));
-            set.add(clientQuestion);
-            this.rootQuestion = clientQuestion.getId();
-        }
-        this.question = set;
-
-        for (var requestQuestion : request.questions) {
-            if (requestQuestion.children.size() > 0) {
-                var question = this.question.stream().filter(x -> Objects.equals(x.getText(), requestQuestion.questionText)).findFirst().orElseThrow();
-                    var leftChild = (new ArrayList<>(requestQuestion.children)).get(1);
-                    this.question.stream().filter(x -> Objects.equals(x.getText(), leftChild.questionText)).findFirst().ifPresent(x -> question.setLeft(x.getId()));
-                    question.setLeftText(leftChild.answerText);
-                if (requestQuestion.children.size() == 2) {
-                    var rightChild = requestQuestion.children.stream().findFirst().orElseThrow();
-                    this.question.stream().filter(x -> Objects.equals(x.getText(), rightChild.questionText)).findFirst().ifPresent(x -> x.setRight(x.getId()));
-                    question.setRightText(rightChild.answerText);
-                }
-            }
-        }
+        this.question = getNonEmptyQuestions(request.questions.stream().findFirst().orElseThrow()).stream().map(ClientQuestion::new).collect(Collectors.toSet());
+        this.rootQuestion = this.question.stream().filter(x -> Objects.equals(x.getText(), request.questions.stream().findFirst().orElseThrow().questionText)).findFirst().orElseThrow().getId();
+        linkQuestions(request);
 
     }
 
-    private Set<ClientQuestion> getAllChildren(CreateSurveyQuestion createSurveyQuestion) {
-        var originalSet = new HashSet<ClientQuestion>();
-        getNodeChildren(createSurveyQuestion, originalSet);
+    private void linkQuestions(CreateSurveyRequest request) {
+        var requestQuestionsFlat = getAllQuestions(request.questions.stream().findFirst().orElseThrow());
+        for (var question : this.question) {
+            requestQuestionsFlat.stream().filter(x -> Objects.equals(x.questionText, question.getText())).findFirst().ifPresent(requestQuestion -> {
+                requestQuestion.children.stream().filter(x -> x.isLeft).findFirst().ifPresent(leftChild -> {
+                    this.question.stream().filter(x -> Objects.equals(x.getText(), leftChild.questionText)).findFirst().ifPresent(x -> question.setLeft(x.getId()));
+                    question.setLeftText(leftChild.answerText);
+                });
+
+                requestQuestion.children.stream().filter(x -> !x.isLeft).findFirst().ifPresent(rightChild -> {
+                    this.question.stream().filter(x -> Objects.equals(x.getText(), rightChild.questionText)).findFirst().ifPresent(x -> question.setRight(x.getId()));
+                    question.setRightText(rightChild.answerText);
+                });
+            });
+        }
+    }
+
+    private Set<CreateSurveyQuestion> getNonEmptyQuestions(CreateSurveyQuestion createSurveyQuestion) {
+        var originalSet = new HashSet<CreateSurveyQuestion>();
+        originalSet.add(createSurveyQuestion);
+        getNodeChildren(createSurveyQuestion, originalSet, false);
         return originalSet;
     }
 
-    private void getNodeChildren(CreateSurveyQuestion createSurveyQuestion, Set<ClientQuestion> set) {
+    private Set<CreateSurveyQuestion> getAllQuestions(CreateSurveyQuestion createSurveyQuestion) {
+        var originalSet = new HashSet<CreateSurveyQuestion>();
+        originalSet.add(createSurveyQuestion);
+        getNodeChildren(createSurveyQuestion, originalSet, true);
+        return originalSet;
+    }
+
+
+    private void getNodeChildren(CreateSurveyQuestion createSurveyQuestion, Set<CreateSurveyQuestion> set, boolean addNull) {
         if (createSurveyQuestion.children != null && createSurveyQuestion.children.size() > 0) {
             for (var question : createSurveyQuestion.children) {
-                if(question.children != null){
-                    set.add(new ClientQuestion(question));
+                if (addNull || question.children != null) {
+                    set.add(question);
                 }
-                getNodeChildren(question, set);
+                getNodeChildren(question, set, addNull);
             }
         }
     }

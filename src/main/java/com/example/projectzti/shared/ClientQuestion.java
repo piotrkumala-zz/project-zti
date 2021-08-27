@@ -21,7 +21,7 @@ public class ClientQuestion {
         this.leftText = leftText;
     }
     public ClientQuestion(Question question) {
-        this(question.getId(), question.getQuestionText(), question.getExternalRight(), question.getExternalLeft(), question.getLeftText(), question.getRightText());
+        this(question.getId(), question.getQuestionText(), question.getExternalRight(), question.getExternalLeft(), question.getRightText(), question.getLeftText());
     }
 
     public ClientQuestion() {
