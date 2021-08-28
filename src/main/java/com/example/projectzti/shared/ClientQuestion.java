@@ -27,9 +27,9 @@ public class ClientQuestion {
     public ClientQuestion() {
     }
 
-    public ClientQuestion(CreateSurveyQuestion createSurveyQuestion) {
+    public ClientQuestion(CreateSurveyQuestionWithId createSurveyQuestion) {
         this.text = createSurveyQuestion.questionText;
-        this.id = UUID.randomUUID();
+        this.id = createSurveyQuestion.id;
     }
 
     public String getText() {

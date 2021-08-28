@@ -7,4 +7,13 @@ public class CreateSurveyQuestion {
     public String answerText;
     public boolean isLeft;
     public Set<CreateSurveyQuestion> children;
+
+    public CreateSurveyQuestion(){}
+
+    public CreateSurveyQuestion(String questionText, String answerText, boolean isLeft) {
+        this.questionText = questionText;
+        this.answerText = answerText;
+        this.isLeft = isLeft;
+    }
+
 }
