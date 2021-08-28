@@ -16,7 +16,7 @@ public class ClientSurvey {
     public UUID rootQuestion;
 
     public ClientSurvey(Survey survey) {
-        this.question = survey.question.stream().map(ClientQuestion::new).collect(Collectors.toSet());
+        this.question = survey.question != null ? survey.question.stream().map(ClientQuestion::new).collect(Collectors.toSet()) : null;
         this.title = survey.getTitle();
         this.description = survey.getDescription();
         this.rootQuestion = survey.getRootQuestion();
