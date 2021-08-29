@@ -15,8 +15,12 @@ public class ClientAnswer {
     }
 
     public ClientAnswer(Set<ClientAnsweredQuestion> questions, UUID surveyId) {
-        this.answeredQuestions = questions;
+        this(questions);
         this.surveyId = surveyId;
+    }
+
+    public ClientAnswer(Set<ClientAnsweredQuestion> questions) {
+        this.answeredQuestions = questions;
     }
 
     public ClientAnswer(Answer answer) {
