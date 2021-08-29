@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureDataJpa
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class SurveyControllerTest {
+class SurveyIntegrationTest {
 
     private final ObjectMapper mapper = new ObjectMapper();
     @Autowired
