@@ -6,6 +6,9 @@ import com.example.projectzti.shared.ClientSurvey;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -24,37 +27,40 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@AutoConfigureDataJpa
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+
 class SurveyControllerTest {
 
-    private final ObjectMapper mapper = new ObjectMapper();
-    @Autowired
-    private MockMvc mockMvc;
-    @MockBean
-    private SurveyRepository repository;
+    @Autowired private MockMvc mockMvc;
+    @Autowired private SurveyRepository repository;
 
     @Test
     void shouldGetAllSurveys() throws Exception {
-        var mockSurveys = new ArrayList<Survey>();
-        mockSurveys.add(new Survey());
-        mockSurveys.add(new Survey());
-        when(repository.findAll()).thenReturn(mockSurveys);
+        repository.deleteAll();
+        repository.save(new Survey());
+        repository.save(new Survey());
+        var result = "[{\"question\":[],\"title\":null,\"description\":null,\"rootQuestion\":null},{\"question\":[],\"title\":null,\"description\":null,\"rootQuestion\":null}]";
 
         this.mockMvc
                 .perform(get("/api/survey"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(mapper.writeValueAsString(mockSurveys.stream().map(ClientSurvey::new).collect(Collectors.toList()))));
+                .andExpect(content().json(result));
     }
 
     @Test
     void shouldGetOneSurvey() throws Exception {
-        when(repository.findById(any())).thenReturn(java.util.Optional.of(new Survey()));
+        repository.deleteAll();
+        var entity = repository.save(new Survey());
+        var result = "{\"question\":[],\"title\":null,\"description\":null,\"rootQuestion\":null}";
+
 
         this.mockMvc
-                .perform(get(String.format("/api/survey/%s", UUID.randomUUID())))
+                .perform(get(String.format("/api/survey/%s", entity.getId())))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json(mapper.writeValueAsString(new ClientSurvey())));
+                .andExpect(content().json(result));
     }
 
 }
