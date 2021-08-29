@@ -1,4 +1,4 @@
-package com.example.projectzti;
+package com.example.projectzti.integration;
 
 import com.example.projectzti.database.models.Answer;
 import com.example.projectzti.database.models.Survey;
