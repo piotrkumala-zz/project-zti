@@ -1,0 +1,9 @@
+com.example.projectzti
+com.example.projectzti.aspects
+com.example.projectzti.controllers
+com.example.projectzti.database.models
+com.example.projectzti.database.repositories
+com.example.projectzti.database.services
+com.example.projectzti.integration
+com.example.projectzti.shared
+com.example.projectzti.unit
