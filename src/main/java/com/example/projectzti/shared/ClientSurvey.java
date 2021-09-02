@@ -18,6 +18,9 @@ public class ClientSurvey {
     public String description;
     public UUID rootQuestion;
 
+    /**
+     * @param survey Survey from database
+     */
     public ClientSurvey(Survey survey) {
         this.question = survey.question != null ? survey.question.stream().map(ClientQuestion::new).collect(Collectors.toSet()) : null;
         this.title = survey.getTitle();
@@ -25,9 +28,15 @@ public class ClientSurvey {
         this.rootQuestion = survey.getRootQuestion();
     }
 
+    /**
+     * Default constructor
+     */
     public ClientSurvey() {
     }
 
+    /**
+     * @param request Survey info from client creating new survey
+     */
     public ClientSurvey(CreateSurveyRequest request) {
         this.title = request.title;
         this.description = request.description;
@@ -35,11 +44,15 @@ public class ClientSurvey {
         var requestQuestionsFlat = flattenQuestion(mainQuestion);
         this.question = requestQuestionsFlat.stream().filter(x -> x.children != null).map(ClientQuestion::new).collect(Collectors.toSet());
         this.rootQuestion = mainQuestion.id;
-        linkQuestions(request, requestQuestionsFlat);
+        linkQuestions(requestQuestionsFlat);
 
     }
 
-    private void linkQuestions(CreateSurveyRequest request, Set<CreateSurveyQuestionWithId> requestQuestionsFlat) {
+    /**
+     * Link question's children with uuid to proper db structure
+     * @param requestQuestionsFlat Questions from create survey request
+     */
+    private void linkQuestions(Set<CreateSurveyQuestionWithId> requestQuestionsFlat) {
 
         for (var question : this.question) {
             requestQuestionsFlat.stream().filter(x -> Objects.equals(x.id, question.getId())).findFirst().ifPresent(requestQuestion -> {
@@ -56,6 +69,11 @@ public class ClientSurvey {
         }
     }
 
+    /**
+     * Flattens questions from create survey to 1D array
+     * @param mainQuestion New survey's root question
+     * @return Flattened questions from create survey request
+     */
     private Set<CreateSurveyQuestionWithId> flattenQuestion(CreateSurveyQuestionWithId mainQuestion) {
         var set = new HashSet<CreateSurveyQuestionWithId>();
         set.add(mainQuestion);
@@ -63,6 +81,11 @@ public class ClientSurvey {
         return set;
     }
 
+    /**
+     * Recursive method retrieving all node's children
+     * @param createSurveyQuestion Question to get children's list
+     * @param set Children's list
+     */
     private void getNodeChildren(CreateSurveyQuestionWithId createSurveyQuestion, Set<CreateSurveyQuestionWithId> set) {
         if (createSurveyQuestion.children != null && createSurveyQuestion.children.size() > 0) {
             for (var question : createSurveyQuestion.children) {

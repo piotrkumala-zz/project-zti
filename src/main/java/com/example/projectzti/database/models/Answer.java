@@ -22,14 +22,24 @@ public class Answer extends Metadata {
     @JoinColumn(name = "survey_id", nullable = false)
     private Survey survey;
 
+    /**
+     * Default constructor
+     */
     public Answer() {
     }
 
+    /**
+     * @param survey Survey being answered
+     * @param answer Answer info from client
+     */
     public Answer(Survey survey, ClientAnswer answer) {
         this.survey = survey;
-        this.answeredQuestions = answer.getAnsweredQuestions().stream().map(x -> new AnsweredQuestion(x, this, survey)).collect(Collectors.toSet());
+        this.answeredQuestions = answer.getAnsweredQuestions().stream().map(x -> new AnsweredQuestion(x, this)).collect(Collectors.toSet());
     }
 
+    /**
+     * @return Answered survey id
+     */
     public UUID getSurveyId() {
         return survey.getId();
     }

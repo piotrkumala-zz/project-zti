@@ -21,6 +21,12 @@ public class AnswerLogger {
 
     Logger logger = LoggerFactory.getLogger(AnswerLogger.class);
 
+    /**
+     * Advice which measures method execution time in milliseconds and logs this measurement
+     * @param pjp JoinPoint execution context
+     * @return execution result
+     * @throws Throwable Propagate profiled method exceptions
+     */
     @Around("execution(* com.example.projectzti.database.services.AnswerService.*(..)))")
     public Object profileServiceMethods(ProceedingJoinPoint pjp) throws Throwable {
         long startTime = System.nanoTime();
@@ -31,20 +37,34 @@ public class AnswerLogger {
         return response;
     }
 
+    /**
+     * Advice logging start of getting all survey's answers
+     */
     @Before("execution(* com.example.projectzti.database.services.AnswerService.getSurveyAnswers(..)))")
-    public void logGettingAllSurveys() {
+    public void logGettingAllSurveysAnswers() {
         logger.info("Getting all survey's answer...");
     }
 
+    /**
+     * Pointcut on saving new answer
+     */
     @Pointcut("execution(* com.example.projectzti.database.services.AnswerService.insertAnswer(..)))")
     public void saveAnswer() {
     }
 
+    /**
+     * Advice logging start of saving answer process
+     */
     @Before("saveAnswer()")
     public void logSavingAnswer() {
         logger.info("Inserting new answer...");
     }
 
+    /**
+     * Advice validating answer to be saved
+     * @param answer Answer to be saved
+     * @throws Exception Validation error
+     */
     @Before("saveAnswer() && args(answer)")
     public void validateSavingAnswer(ClientAnswer answer) throws Exception {
         if(answer.getSurveyId().compareTo(new UUID(0L, 0L)) == 0){

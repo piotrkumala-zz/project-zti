@@ -11,9 +11,15 @@ import java.util.UUID;
 public class CreateSurveyResponse {
     public UUID surveyId;
 
+    /**
+     * Default constructor
+     */
     public CreateSurveyResponse() {
     }
 
+    /**
+     * @param survey Created survey's id
+     */
     public CreateSurveyResponse(Survey survey) {
         surveyId = survey.getId();
     }

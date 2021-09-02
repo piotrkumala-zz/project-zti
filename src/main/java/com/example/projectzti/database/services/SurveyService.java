@@ -18,19 +18,33 @@ import java.util.stream.StreamSupport;
 public class SurveyService {
     private final SurveyRepository repository;
 
+    /**
+     * @param repository Injected SpringData survey repository
+     */
     public SurveyService(SurveyRepository repository) {
         this.repository = repository;
     }
 
+    /**
+     * @return Survey's stream
+     */
     public Stream<Survey> getAllSurveys() {
         return StreamSupport.stream(this.repository.findAll().spliterator(), false);
     }
 
+    /**
+     * @param survey Survey to be added
+     * @return Added survey
+     */
     public Survey insertSurvey(ClientSurvey survey) {
         var entityToSave = new Survey(survey);
         return this.repository.save(entityToSave);
     }
 
+    /**
+     * @param id Survey id
+     * @return Survey
+     */
     public Survey getSurvey(UUID id) {
         return this.repository.findById(id).orElse(null);
     }

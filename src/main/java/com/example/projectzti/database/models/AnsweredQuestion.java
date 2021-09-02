@@ -23,20 +23,33 @@ public class AnsweredQuestion extends Metadata {
     private UUID questionId;
     private AnsweredDirection answeredDirection;
 
+    /**
+     * Default constructor
+     */
     public AnsweredQuestion() {
     }
 
-    public AnsweredQuestion(ClientAnsweredQuestion question, Answer answer, Survey survey) {
+    /**
+     * @param question Answered question info from client
+     * @param answer Answer to bind this question to
+     */
+    public AnsweredQuestion(ClientAnsweredQuestion question, Answer answer) {
         this.questionId = question.getQuestionId();
         this.answeredDirection = question.getAnsweredDirection();
         this.answer = answer;
     }
 
+    /**
+     * @return Question id
+     */
     public UUID getQuestionId() {
         return questionId;
     }
 
 
+    /**
+     * @return Answered Direction
+     */
     public AnsweredDirection getAnsweredDirection() {
         return answeredDirection;
     }

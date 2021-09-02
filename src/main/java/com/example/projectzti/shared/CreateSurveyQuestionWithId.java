@@ -12,6 +12,10 @@ public class CreateSurveyQuestionWithId extends CreateSurveyQuestion {
     public Set<CreateSurveyQuestionWithId> children;
 
 
+    /**
+     * This constructor recursively converts all question's children to CreateSurveyQuestionWithId type and gives them ids
+     * @param createSurveyQuestion Create survey question without id
+     */
     public CreateSurveyQuestionWithId(CreateSurveyQuestion createSurveyQuestion) {
         super(createSurveyQuestion.questionText, createSurveyQuestion.answerText, createSurveyQuestion.isLeft);
         id = UUID.randomUUID();

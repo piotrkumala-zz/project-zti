@@ -11,8 +11,16 @@ public class CreateSurveyQuestion {
     public boolean isLeft;
     public Set<CreateSurveyQuestion> children;
 
+    /**
+     * Default constructor
+     */
     public CreateSurveyQuestion(){}
 
+    /**
+     * @param questionText Question text
+     * @param answerText Question answer
+     * @param isLeft Is the left answer
+     */
     public CreateSurveyQuestion(String questionText, String answerText, boolean isLeft) {
         this.questionText = questionText;
         this.answerText = answerText;

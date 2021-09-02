@@ -25,6 +25,9 @@ public class Survey extends Metadata {
     private String title;
     private UUID rootQuestion;
 
+    /**
+     * @param survey Survey info from the client
+     */
     public Survey(ClientSurvey survey) {
         this.question = survey.question.stream().map(x -> new Question(x, this)).collect(Collectors.toSet());
         this.title = survey.title;
@@ -32,21 +35,36 @@ public class Survey extends Metadata {
         this.rootQuestion = survey.rootQuestion;
     }
 
+    /**
+     * Default constructor
+     */
     public Survey() {
     }
 
+    /**
+     * @return Survey title
+     */
     public String getTitle() {
         return this.title;
     }
 
+    /**
+     * @return Survey description
+     */
     public String getDescription() {
         return this.description;
     }
 
+    /**
+     * @return Root question id
+     */
     public UUID getRootQuestion() {
         return this.rootQuestion;
     }
 
+    /**
+     * @return Survey id
+     */
     public UUID getId() {
         return id;
     }
