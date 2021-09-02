@@ -8,6 +8,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.util.UUID;
 
+/**
+ * Question database entity
+ */
 @Entity
 public class Question extends Metadata {
 

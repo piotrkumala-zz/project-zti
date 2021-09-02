@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * REST API controller for survey operations
+ */
 @RestController
 public class SurveyController {
     private final SurveyService surveyService;

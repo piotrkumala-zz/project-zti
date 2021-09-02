@@ -10,6 +10,9 @@ import java.util.UUID;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
+/**
+ * Service handling operations on survey
+ */
 @Service
 @Transactional
 public class SurveyService {

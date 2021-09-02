@@ -2,6 +2,9 @@ package com.example.projectzti.shared;
 
 import java.util.Set;
 
+/**
+ * Client facing survey question used when creating new surveys
+ */
 public class CreateSurveyQuestion {
     public String questionText;
     public String answerText;

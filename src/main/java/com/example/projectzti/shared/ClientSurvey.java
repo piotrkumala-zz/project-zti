@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Client facing Survey object
+ */
 public class ClientSurvey {
 
     public Set<ClientQuestion> question;

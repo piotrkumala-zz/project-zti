@@ -6,6 +6,9 @@ import com.example.projectzti.shared.ClientAnsweredQuestion;
 import javax.persistence.*;
 import java.util.UUID;
 
+/**
+ * Answered Question database entity
+ */
 @Entity
 public class AnsweredQuestion extends Metadata {
     @Id

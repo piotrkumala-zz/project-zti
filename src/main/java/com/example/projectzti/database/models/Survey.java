@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Survey database entity
+ */
 @Entity
 public class Survey extends Metadata {
     @Id

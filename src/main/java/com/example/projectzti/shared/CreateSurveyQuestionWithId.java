@@ -4,6 +4,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Client facing survey question with added id field
+ */
 public class CreateSurveyQuestionWithId extends CreateSurveyQuestion {
     public UUID id;
     public Set<CreateSurveyQuestionWithId> children;

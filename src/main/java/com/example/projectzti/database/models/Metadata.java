@@ -6,6 +6,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.MappedSuperclass;
 import java.sql.Timestamp;
 
+
+/**
+ * Basic database entity metadata
+ */
 @MappedSuperclass
 public class Metadata {
 

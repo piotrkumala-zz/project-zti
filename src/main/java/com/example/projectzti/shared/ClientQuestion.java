@@ -4,6 +4,9 @@ import com.example.projectzti.database.models.Question;
 
 import java.util.UUID;
 
+/**
+ * Client facing Question object
+ */
 public class ClientQuestion {
     private UUID id;
     private String text;

@@ -11,6 +11,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+/**
+ * Aspect logging and profiling survey operations
+ */
 @Aspect
 @Component
 public class SurveyLogger {

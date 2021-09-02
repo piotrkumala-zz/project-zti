@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
+/**
+ * Aspect logging and profiling answer operations
+ */
 @Aspect
 @Component
 public class AnswerLogger {

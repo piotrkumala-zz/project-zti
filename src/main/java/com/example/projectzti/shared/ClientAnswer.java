@@ -6,6 +6,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Client facing Answer object
+ */
 public class ClientAnswer {
 
     private Set<ClientAnsweredQuestion> answeredQuestions;

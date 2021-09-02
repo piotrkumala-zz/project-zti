@@ -8,6 +8,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * Answer database entity
+ */
 @Entity
 public class Answer extends Metadata {
     @Id
