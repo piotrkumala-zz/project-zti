@@ -19,7 +19,7 @@ import java.util.UUID;
 @Component
 public class AnswerLogger {
 
-    Logger logger = LoggerFactory.getLogger(AnswerLogger.class);
+    final Logger logger = LoggerFactory.getLogger(AnswerLogger.class);
 
     /**
      * Advice which measures method execution time in milliseconds and logs this measurement

@@ -49,7 +49,7 @@ public class SurveyController {
      * @return Added survey
      */
     @PostMapping(value = "api/survey")
-    public CreateSurveyResponse saveSurvey(@RequestBody @Validated CreateSurveyRequest survey) {
+    public CreateSurveyResponse saveSurvey(@RequestBody @Validated CreateSurveyRequest survey) throws Throwable {
         return new CreateSurveyResponse(this.surveyService.insertSurvey(new ClientSurvey(survey)));
     }
 }

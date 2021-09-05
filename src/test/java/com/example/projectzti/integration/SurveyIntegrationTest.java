@@ -15,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -47,7 +48,7 @@ class SurveyIntegrationTest {
         repository.deleteAll();
         repository.save(new Survey());
         repository.save(new Survey());
-        var result = "[{\"question\":[],\"title\":null,\"description\":null,\"rootQuestion\":null},{\"question\":[],\"title\":null,\"description\":null,\"rootQuestion\":null}]";
+        String result = "[{\"question\":[],\"title\":null,\"description\":null,\"rootQuestion\":null},{\"question\":[],\"title\":null,\"description\":null,\"rootQuestion\":null}]";
 
         this.mockMvc
                 .perform(get("/api/survey"))
@@ -59,8 +60,8 @@ class SurveyIntegrationTest {
     @Test
     void shouldGetOneSurvey() throws Exception {
         repository.deleteAll();
-        var entity = repository.save(new Survey());
-        var result = "{\"question\":[],\"title\":null,\"description\":null,\"rootQuestion\":null}";
+        Survey entity = repository.save(new Survey());
+        String result = "{\"question\":[],\"title\":null,\"description\":null,\"rootQuestion\":null}";
 
 
         this.mockMvc
@@ -72,17 +73,17 @@ class SurveyIntegrationTest {
 
     @Test
     void shouldSaveSurvey() throws Exception {
-        var request = new CreateSurveyRequest();
+        CreateSurveyRequest request = new CreateSurveyRequest();
         request.title = "test title";
         request.description = "test description";
         request.questions = new HashSet<>();
-        var question = new CreateSurveyQuestion("question", "answer", false);
+        CreateSurveyQuestion question = new CreateSurveyQuestion("question", "answer", false);
         question.children = new HashSet<>();
         question.children.add(new CreateSurveyQuestion(null, "left", true));
         question.children.add(new CreateSurveyQuestion(null, "right", false));
         request.questions.add(question);
 
-        var result = this.mockMvc.perform(post("/api/survey")
+        MvcResult result = this.mockMvc.perform(post("/api/survey")
                         .content(this.mapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -90,7 +91,7 @@ class SurveyIntegrationTest {
                 .andExpect(status().isOk())
                 .andReturn();
 
-        var addedSurvey = this.repository.findById(
+        Survey addedSurvey = this.repository.findById(
                 UUID.fromString(new JSONObject(result
                         .getResponse()
                         .getContentAsString())

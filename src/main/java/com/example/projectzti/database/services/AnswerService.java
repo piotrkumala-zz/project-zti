@@ -1,6 +1,7 @@
 package com.example.projectzti.database.services;
 
 import com.example.projectzti.database.models.Answer;
+import com.example.projectzti.database.models.Survey;
 import com.example.projectzti.database.repositories.AnswerRepository;
 import com.example.projectzti.shared.ClientAnswer;
 import org.springframework.stereotype.Service;
@@ -42,8 +43,8 @@ public class AnswerService {
      * @return Added answer
      */
     public Answer insertAnswer(ClientAnswer answer) {
-        var survey = surveyService.getSurvey(answer.getSurveyId());
-        var entityToSave = new Answer(survey, answer);
+        Survey survey = surveyService.getSurvey(answer.getSurveyId());
+        Answer entityToSave = new Answer(survey, answer);
         return this.repository.save(entityToSave);
     }
 }

@@ -44,13 +44,13 @@ public class AnswerIntegrationTest {
     @Test
     void shouldGetSurveyAnswers() throws Exception {
         answerRepository.deleteAll();
-        var survey = surveyRepository.save(new Survey());
-        var answers = new HashSet<ClientAnsweredQuestion>();
+        Survey survey = surveyRepository.save(new Survey());
+        HashSet<ClientAnsweredQuestion> answers = new HashSet<>();
         answers.add(new ClientAnsweredQuestion());
         answers.add(new ClientAnsweredQuestion());
         answerRepository.save(new Answer(survey, new ClientAnswer(answers)));
         answerRepository.save(new Answer(survey, new ClientAnswer(answers)));
-        var result = ""
+        String result = ""
                 .concat(String.format(
                         "[{\"answeredQuestions\":[{\"questionId\":null,\"answeredDirection\":null},{\"questionId\":null,\"answeredDirection\":null}], \"surveyId\":\"%s\"},",
                         survey.getId()))
@@ -68,11 +68,11 @@ public class AnswerIntegrationTest {
     @Test
     void shouldSaveAnswer() throws Exception {
         answerRepository.deleteAll();
-        var survey = surveyRepository.save(new Survey());
-        var answers = new HashSet<ClientAnsweredQuestion>();
+        Survey survey = surveyRepository.save(new Survey());
+        HashSet<ClientAnsweredQuestion> answers = new HashSet<>();
         answers.add(new ClientAnsweredQuestion());
         answers.add(new ClientAnsweredQuestion());
-        var request = new Answer(survey, new ClientAnswer(answers));
+        Answer request = new Answer(survey, new ClientAnswer(answers));
         this.mockMvc
                 .perform(post("/api/answer")
                         .content(this.mapper.writeValueAsString(request))

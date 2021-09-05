@@ -37,7 +37,7 @@ public class SurveyService {
      * @return Added survey
      */
     public Survey insertSurvey(ClientSurvey survey) {
-        var entityToSave = new Survey(survey);
+        Survey entityToSave = new Survey(survey);
         return this.repository.save(entityToSave);
     }
 

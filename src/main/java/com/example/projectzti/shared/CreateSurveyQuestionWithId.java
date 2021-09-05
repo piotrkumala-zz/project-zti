@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  * Client facing survey question with added id field
  */
 public class CreateSurveyQuestionWithId extends CreateSurveyQuestion {
-    public UUID id;
+    public final UUID id;
     public Set<CreateSurveyQuestionWithId> children;
 
 

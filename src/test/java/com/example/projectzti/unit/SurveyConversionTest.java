@@ -20,19 +20,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SurveyConversionTest {
 
     @Test
-    void shouldConvertClientWithOneQuestionToEntity() {
-        var request = new CreateSurveyRequest();
+    void shouldConvertClientWithOneQuestionToEntity() throws Throwable {
+        CreateSurveyRequest request = new CreateSurveyRequest();
         request.title = "test title";
         request.description = "test description";
         request.questions = new HashSet<>();
-        var question = new CreateSurveyQuestion("question", null, false);
+        CreateSurveyQuestion question = new CreateSurveyQuestion("question", null, false);
         question.children = new HashSet<>();
         question.children.add(new CreateSurveyQuestion(null, "left", true));
         question.children.add(new CreateSurveyQuestion(null, "right", false));
         request.questions.add(question);
 
-        var result = new ClientSurvey(request);
-        var resultQuestions = new ArrayList<>(result.question);
+        ClientSurvey result = new ClientSurvey(request);
+        ArrayList<ClientQuestion> resultQuestions = new ArrayList<>(result.question);
         assertThat(result)
                 .isNotNull()
                 .extracting(x -> x.title, x -> x.description, x -> x.rootQuestion)
@@ -55,36 +55,36 @@ public class SurveyConversionTest {
     }
 
     @Test
-    void shouldConvertClientToEntityAndBack() {
-        var request = new CreateSurveyRequest();
+    void shouldConvertClientToEntityAndBack() throws Throwable {
+        CreateSurveyRequest request = new CreateSurveyRequest();
         request.title = "test title";
         request.description = "test description";
         request.questions = new HashSet<>();
-        var question = new CreateSurveyQuestion("question", null, false);
+        CreateSurveyQuestion question = new CreateSurveyQuestion("question", null, false);
         question.children = new HashSet<>();
         question.children.add(new CreateSurveyQuestion(null, "left", true));
         question.children.add(new CreateSurveyQuestion(null, "right", false));
         request.questions.add(question);
 
-        var clientSurvey = new ClientSurvey(request);
-        var entity = new Survey(clientSurvey);
+        ClientSurvey clientSurvey = new ClientSurvey(request);
+        Survey entity = new Survey(clientSurvey);
 
         assertThat(new ClientSurvey(entity)).isNotNull().usingRecursiveComparison().isEqualTo(clientSurvey);
     }
 
     @Test
-    void shouldConvertClientWithMultipleQuestionsToEntity() {
-        var request = new CreateSurveyRequest();
+    void shouldConvertClientWithMultipleQuestionsToEntity() throws Throwable {
+        CreateSurveyRequest request = new CreateSurveyRequest();
         request.title = "test title";
         request.description = "test description";
         request.questions = new HashSet<>();
-        var question = new CreateSurveyQuestion("question", null, false);
-        var set = new HashSet<CreateSurveyQuestion>();
+        CreateSurveyQuestion question = new CreateSurveyQuestion("question", null, false);
+        HashSet<CreateSurveyQuestion> set = new HashSet<>();
         set.add(new CreateSurveyQuestion(null, "left", true));
         set.add(new CreateSurveyQuestion(null, "right", false));
-        var leftChild = new CreateSurveyQuestion("left question", "left", true);
+        CreateSurveyQuestion leftChild = new CreateSurveyQuestion("left question", "left", true);
         leftChild.children = set;
-        var rightChild = new CreateSurveyQuestion("right question", "right", false);
+        CreateSurveyQuestion rightChild = new CreateSurveyQuestion("right question", "right", false);
         rightChild.children = set;
 
         question.children = new HashSet<>();
@@ -92,8 +92,8 @@ public class SurveyConversionTest {
         question.children.add(rightChild);
         request.questions.add(question);
 
-        var result = new ClientSurvey(request);
-        var resultQuestions = new ArrayList<>(result.question);
+        ClientSurvey result = new ClientSurvey(request);
+        ArrayList<ClientQuestion> resultQuestions = new ArrayList<>(result.question);
         assertThat(result)
                 .isNotNull()
                 .extracting(x -> x.title, x -> x.description, x -> x.rootQuestion)

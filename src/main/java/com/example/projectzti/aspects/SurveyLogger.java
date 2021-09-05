@@ -18,7 +18,7 @@ import java.util.UUID;
 @Component
 public class SurveyLogger {
 
-    Logger logger = LoggerFactory.getLogger(SurveyLogger.class);
+    final Logger logger = LoggerFactory.getLogger(SurveyLogger.class);
 
     /**
      * Advice which measures method execution time in milliseconds and logs this measurement
